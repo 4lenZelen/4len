@@ -1,17 +1,20 @@
-options {
-    directory "/usr/local/etc/namedb/master"; 
-    listen-on  { 127.0.0.1; 172.16.16.16;}; 
-    forwarders{
-            8.8.8.8;    
-    };
-};
-
-zone "hostischev.edu.ua" {
-    type primary;
-    file "/usr/local/etc/namedb/master/hostischev.edu.ua.fwd";
-};
-
-zone "16.16.172.in-addr.arpa" {
-    type primary;
-    file "/usr/local/etc/namedb/master/hostischev.edu.ua.rev";
-};
+#192.168.6.0/24
+    subnet 192.168.6.0 netmask 255.255.255.0 {
+    range 192.168.6.2 192.168.6.254;
+    option routers 192.168.6.1;
+    option domain-паме "hostischev.edu.ua"; 
+    option domain-паме-servers 192.168.6.1;
+    option broadcast-address 192.168.6.255;
+    default-lease-tiме 7200;
+    Max-lease-time 28800;
+}
+#172.16.16.0/24
+    subnet 172.16.16.0 netmask 255.255.255.0 {
+    range 172.16.16.1 172.16.16.254;
+    option routers 172.16.16.16;
+    option domain-паме "hostischev.edu.ua";
+    option broadcast-address 172.16.16.255;
+    option dоmаin-паме-servers 172.16.16.16;
+    default-lease-time 7200;
+    Max-lease-time 28800;
+{
