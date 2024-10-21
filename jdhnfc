@@ -1,1 +1,17 @@
-jhsfvbjlsvb
+options {
+    directory "/usr/local/etc/namedb/master"; 
+    listen-on  { 127.0.0.1; 172.16.16.16;}; 
+    forwarders{
+            8.8.8.8;    
+    };
+};
+
+zone "hostischev.edu.ua" {
+    type primary;
+    file "/usr/local/etc/namedb/master/hostischev.edu.ua.fwd";
+};
+
+zone "16.16.172.in-addr.arpa" {
+    type primary;
+    file "/usr/local/etc/namedb/master/hostischev.edu.ua.rev";
+};
