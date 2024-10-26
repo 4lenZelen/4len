@@ -1,20 +1,86 @@
-#192.168.6.0/24
-    subnet 192.168.6.0 netmask 255.255.255.0 {
-    range 192.168.6.2 192.168.6.254;
-    option routers 192.168.6.1;
-    option domain-паме "hostischev.edu.ua"; 
-    option domain-паме-servers 192.168.6.1;
-    option broadcast-address 192.168.6.255;
-    default-lease-tiме 7200;
-    Max-lease-time 28800;
-}
-#172.16.16.0/24
-    subnet 172.16.16.0 netmask 255.255.255.0 {
-    range 172.16.16.1 172.16.16.254;
-    option routers 172.16.16.16;
-    option domain-паме "hostischev.edu.ua";
-    option broadcast-address 172.16.16.255;
-    option dоmаin-паме-servers 172.16.16.16;
-    default-lease-time 7200;
-    Max-lease-time 28800;
-{
+ServerName                      "ProFTPD Default Installation"
+ServerType                      standalone
+DefaultServer                   on
+ScoreboardFile          /var/run/proftpd/proftpd.scoreboard
+
+Port                            21
+
+#UseIPiv6                               on
+
+Umask                           022
+
+MaxInstances                    10
+
+CommandBufferSize       512
+
+User                            proftp
+Group                           proftp
+
+DefaultRoot ~
+
+AllowOverwrite          off
+
+<Limit SITE_CHMOD>
+  DenyAll
+</Limit>
+
+DisplayLogin            "Hostischev_FTP_server"
+MaxClients              3 "Sorry, max %m users - try again later"
+
+TimeoutLogin            20
+
+<Limit LOGIN>
+ AllowUser test1
+ AllowUser test2
+ DenyAll
+</Limit>
+
+<Anonymous /var/ftp>
+
+  <Limit LOGIN>
+      AllowAll
+  </Limit>
+
+   User                         proftp
+   Group                                proftp
+
+   UserAlias                    anonymous ftpuser
+
+   <Directory /var/ftp>
+    <Limit WRITE>
+     DenyAll
+    </Limit>
+   </Directory>
+
+   <Directory /var/ftp/upload>
+    <Limit STOR MKD XMKD>
+     AllowAll
+    </Limit>
+
+    <Limit DELE RMD XRMD READ>
+     DenyAll
+    </Limit>
+   </Directory>
+
+   <Directory /var/ftp/incoming>
+   <Limit ALL>
+     DenyAll
+    </Limit>
+
+    <Limit CDUP CWD PWD XCWD XCUP>
+     AllowAll
+    </Limit>
+
+    <Limit STOR STOU>
+     AllowAll
+    </Limit>
+   </Directory>
+
+   <Limit WRITE>
+     DenyAll
+   </Limit>
+
+    <Limit LOGIN>
+     Deny from 192.168.254.0/24
+    </Limit>
+</Anonymous>
