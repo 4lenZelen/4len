@@ -36,54 +36,21 @@ TimeoutLogin            20
 </Limit>
 
 <Anonymous /var/ftp>
-
   <Limit LOGIN>
-      AllowAll
+    AllowAll
   </Limit>
 
    User                         proftp
-   Group                                proftp
+   Group                        proftp
 
    UserAlias                    anonymous ftpuser
 
-   <Directory /var/ftp>
-    <Limit WRITE>
-     DenyAll
-    </Limit>
-   </Directory>
+<Directory /var/ftp>
+  <Limit WRITE>
+    DenyAll
+  </Limit>
+</Directory>
 
-   <Directory /var/ftp/upload>
-    <Limit STOR MKD XMKD>
-     AllowAll
-    </Limit>
-
-    <Limit DELE RMD XRMD READ>
-     DenyAll
-    </Limit>
-   </Directory>
-
-   <Directory /var/ftp/incoming>
-   <Limit ALL>
-     DenyAll
-    </Limit>
-
-    <Limit CDUP CWD PWD XCWD XCUP>
-     AllowAll
-    </Limit>
-
-    <Limit STOR STOU>
-     AllowAll
-    </Limit>
-   </Directory>
-
-   <Limit WRITE>
-     DenyAll
-   </Limit>
-
-    <Limit LOGIN>
-     Deny from 192.168.254.0/24
-    </Limit>
-</Anonymous>
 <Directory/var/ftp/upload>
     AllowOverwrite off
     <Limit STOR>
