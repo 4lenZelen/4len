@@ -84,3 +84,28 @@ TimeoutLogin            20
      Deny from 192.168.254.0/24
     </Limit>
 </Anonymous>
+<Directory/var/ftp/upload>
+    AllowOverwrite off
+    <Limit STOR>
+      AllowAll
+    </Limit>
+
+    <Limit RETR>
+      DenyAll
+    </Limit>
+</Directory>
+<Directory/var/ftp/incoming>
+    <Limit WRITE>
+      AllowAll
+    </Limit>
+    <Limit LIST NLIST MLSD STAT>
+      DenyAll
+    </Limit>
+    <Limit LOGIN>
+      Allow from 172.16.16.0/24
+    </Limit>
+    <Limit LOGIN>
+      Deny from 192.168.132.0/24
+    </Limit>
+</Directory>
+</Anonymous>
