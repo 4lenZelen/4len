@@ -1,78 +1,31 @@
-ServerName                      "ProFTPD Default Installation"
-ServerType                      standalone
-DefaultServer                   on
-ScoreboardFile          /var/run/proftpd/proftpd.scoreboard
+#!/bin/sh
 
-Port                            21
+# 1
+ipfw -q -f flush
+# 2
+ipfw -q add 10 allow all from any to any via lo0
+ipfw -q add 20 deny all from any to 127.0.0.0/8
+ipfw -q add 30 deny all from 127.0.0.0/8 to any
+# 3
+ipfw -q add 100 allow udp from any to any 69
+# 4
+ipfw -q add 200 allow tcp from any to any 111
+ipfw -q add 210 allow udp from any to any 111
+# 5
+ipfw -q add 300 allow udp from any to any 67-68
+# 6
+ipfw -q add 400 allow tcp from any to any 2049,4045
+ipfw -q add 410 allow udp from any to any 2049,4045
+# 7
+ipfw -q add 500 deny icmp from any to any frag
+ipfw -q add 510 allow icmp from any to any
+# 8
+ipfw -q add 600 allow tcp from any to any 53
+ipfw -q add 610 allow udp from any to any 53
+# 9
+ipfw -q add 700 allow tcp from any to any 80
+# 10
+ipfw -q add 800 allow tcp from any to any 20-21
+# 11
+ipfw -q add 1000 deny all from any to any
 
-#UseIPiv6                               on
-
-Umask                           022
-
-MaxInstances                    10
-
-CommandBufferSize       512
-
-User                            proftp
-Group                           proftp
-
-DefaultRoot ~
-
-AllowOverwrite          off
-
-<Limit SITE_CHMOD>
-  DenyAll
-</Limit>
-
-DisplayLogin            "Hostischev_FTP_server"
-MaxClients              3 "Sorry, max %m users - try again later"
-
-TimeoutLogin            20
-
-<Limit LOGIN>
- AllowUser test1
- AllowUser test2
- DenyAll
-</Limit>
-
-<Anonymous /var/ftp>
-  <Limit LOGIN>
-    AllowAll
-  </Limit>
-
-   User                         proftp
-   Group                        proftp
-
-   UserAlias                    anonymous ftpuser
-
-<Directory /var/ftp>
-  <Limit WRITE>
-    DenyAll
-  </Limit>
-</Directory>
-
-<Directory/var/ftp/upload>
-    AllowOverwrite off
-    <Limit STOR>
-      AllowAll
-    </Limit>
-
-    <Limit RETR>
-      DenyAll
-    </Limit>
-</Directory>
-<Directory/var/ftp/incoming>
-    <Limit WRITE>
-      AllowAll
-    </Limit>
-    <Limit LIST NLIST MLSD STAT>
-      DenyAll
-    </Limit>
-    <Limit LOGIN>
-      Allow from 172.16.16.0/24
-    </Limit>
-    <Limit LOGIN>
-      Deny from 192.168.132.0/24
-    </Limit>
-</Directory>
-</Anonymous>
