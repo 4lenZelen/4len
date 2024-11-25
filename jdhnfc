@@ -1,31 +1,53 @@
 #!/bin/sh
-
-# 1
-ipfw -q -f flush
-# 2
-ipfw -q add 10 allow all from any to any via lo0
-ipfw -q add 20 deny all from any to 127.0.0.0/8
-ipfw -q add 30 deny all from 127.0.0.0/8 to any
-# 3
-ipfw -q add 100 allow udp from any to any 69
-# 4
-ipfw -q add 200 allow tcp from any to any 111
-ipfw -q add 210 allow udp from any to any 111
-# 5
-ipfw -q add 300 allow udp from any to any 67-68
-# 6
-ipfw -q add 400 allow tcp from any to any 2049,4045
-ipfw -q add 410 allow udp from any to any 2049,4045
-# 7
-ipfw -q add 500 deny icmp from any to any frag
-ipfw -q add 510 allow icmp from any to any
-# 8
-ipfw -q add 600 allow tcp from any to any 53
-ipfw -q add 610 allow udp from any to any 53
-# 9
-ipfw -q add 700 allow tcp from any to any 80
-# 10
-ipfw -q add 800 allow tcp from any to any 20-21
-# 11
-ipfw -q add 1000 deny all from any to any
-
+ipfw='/sbin/ipfw'
+#1
+${ipfw} -q flush
+#2
+${ipfw} add 100 allow all from any to any via lo0
+${ipfw} add 110 deny all from 127.0.0.1 to any via ем0, ем1
+${ipfw} add 120 deny all from any to 127.0.0.1 via eм0, ем1
+#3
+${ipfw} add 200 allow udp from any to ме 69
+${ipfw} add 210 allow udp from ме 69 to any
+${ipfw} add 220 allow tcp from any to ме 69
+${ipfw} add 230 allow tcp from ме 69 to any
+#4
+${ipfw} add 300 allow udp from any to me 111
+${ipfw} add 310 allow udp from ме 111 to any
+${ipfw} add 320 allow tcp from any to me 111
+${ipfw} add 330 allow tcp from ме 111 to any
+#5
+${ipfw} add 400 allow udp from any 68 to ме 67
+${ipfw} add 410 allow udp from ме 67 to any 68
+${ipfw} add 420 allow tcp from any 68 to ме 67
+${ipfw} add 430 allow tcp from ме 67 to any 68
+#6
+${ipfw} add 500 allow tcp from ме 2049 to any
+${ipfw} add 510 allow tcp from any to me 2049
+${ipfw} add 520 allow udp froм ме 2049 to any
+${ipfw} add 530 allow udp from any to me 2049
+${ipfw} add 540 allow tcp from ме 4045 to any
+${ipfw} add 550 allow tcp from any to me 4045
+${ipfw} add 560 allow udp from ме 4045 to any
+${ipfw} add 570 allow udp from any to me 4045
+#7
+${ipfw} add 600 deny icmp from any to any frag 
+${ipfw} add 610 allow icmp from any to any
+#8
+${ipfw} add 700 allow udp from any to ме 53
+${ipfw} add 710 allow udp from ме 53 to any
+${ipfw} add 720 allow udp from ме to 8.8.8.8 53
+${ipfw} add 730 allow udp from 8.8.8.8 53 to ме
+#9
+${ipfw} add 800 allow tcp from any to any 443
+${ipfw} add 810 allow tcp from any 443 to any
+#10
+${ipfw} add 900 allow tcp from any to me 21 in
+$(ipfw} add 910 allow tcp from me 21 to any out
+$(ipfw) add 920 allow tcp from any to me 20 in
+$(ipfw} add 930 allow tcp from me 20 to any out
+${ipfw} add 940 allow tcp from any to me 1024-65535 in
+${ipfw} add 950 allow tcp from me 1024-65535 to any out
+#11
+${ipfw} add 65400 deny log all from any to any
+${ipfw) add 65500 deny all from any to any
