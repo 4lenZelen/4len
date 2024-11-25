@@ -4,40 +4,40 @@ ipfw='/sbin/ipfw'
 ${ipfw} -q flush
 #2
 ${ipfw} add 100 allow all from any to any via lo0
-${ipfw} add 110 deny all from 127.0.0.1 to any via em0, еm1
-${ipfw} add 120 deny all from any to 127.0.0.1 via em0, еm1
+${ipfw} add 110 deny all from 127.0.0.1 to any via em0, em1
+${ipfw} add 120 deny all from any to 127.0.0.1 via em0, em1
 #3
-${ipfw} add 200 allow udp from any to ме 69
-${ipfw} add 210 allow udp from ме 69 to any
-${ipfw} add 220 allow tcp from any to ме 69
-${ipfw} add 230 allow tcp from ме 69 to any
+${ipfw} add 200 allow udp from any to me 69
+${ipfw} add 210 allow udp from me 69 to any
+${ipfw} add 220 allow tcp from any to me 69
+${ipfw} add 230 allow tcp from me 69 to any
 #4
 ${ipfw} add 300 allow udp from any to me 111
-${ipfw} add 310 allow udp from ме 111 to any
+${ipfw} add 310 allow udp from me 111 to any
 ${ipfw} add 320 allow tcp from any to me 111
-${ipfw} add 330 allow tcp from ме 111 to any
+${ipfw} add 330 allow tcp from me 111 to any
 #5
-${ipfw} add 400 allow udp from any 68 to ме 67
-${ipfw} add 410 allow udp from ме 67 to any 68
-${ipfw} add 420 allow tcp from any 68 to ме 67
-${ipfw} add 430 allow tcp from ме 67 to any 68
+${ipfw} add 400 allow udp from any 68 to me 67
+${ipfw} add 410 allow udp from me 67 to any 68
+${ipfw} add 420 allow tcp from any 68 to me 67
+${ipfw} add 430 allow tcp from me 67 to any 68
 #6
-${ipfw} add 500 allow tcp from ме 2049 to any
+${ipfw} add 500 allow tcp from me 2049 to any
 ${ipfw} add 510 allow tcp from any to me 2049
-${ipfw} add 520 allow udp froм ме 2049 to any
+${ipfw} add 520 allow udp from me 2049 to any
 ${ipfw} add 530 allow udp from any to me 2049
-${ipfw} add 540 allow tcp from ме 4045 to any
+${ipfw} add 540 allow tcp from me 4045 to any
 ${ipfw} add 550 allow tcp from any to me 4045
-${ipfw} add 560 allow udp from ме 4045 to any
+${ipfw} add 560 allow udp from me 4045 to any
 ${ipfw} add 570 allow udp from any to me 4045
 #7
 ${ipfw} add 600 deny icmp from any to any frag 
 ${ipfw} add 610 allow icmp from any to any
 #8
-${ipfw} add 700 allow udp from any to ме 53
-${ipfw} add 710 allow udp from ме 53 to any
-${ipfw} add 720 allow udp from ме to 8.8.8.8 53
-${ipfw} add 730 allow udp from 8.8.8.8 53 to ме
+${ipfw} add 700 allow udp from any to me 53
+${ipfw} add 710 allow udp from me 53 to any
+${ipfw} add 720 allow udp from me to 8.8.8.8 53
+${ipfw} add 730 allow udp from 8.8.8.8 53 to me
 #9
 ${ipfw} add 800 allow tcp from any to any 443
 ${ipfw} add 810 allow tcp from any 443 to any
