@@ -4,8 +4,8 @@ ipfw='/sbin/ipfw'
 ${ipfw} -q flush
 #2
 ${ipfw} add 100 allow all from any to any via lo0
-${ipfw} add 110 deny all from 127.0.0.1 to any via ем0, ем1
-${ipfw} add 120 deny all from any to 127.0.0.1 via eм0, ем1
+${ipfw} add 110 deny all from 127.0.0.1 to any via em0, еm1
+${ipfw} add 120 deny all from any to 127.0.0.1 via em0, еm1
 #3
 ${ipfw} add 200 allow udp from any to ме 69
 ${ipfw} add 210 allow udp from ме 69 to any
